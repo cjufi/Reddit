@@ -1,9 +1,6 @@
 package com.filiptasic.reddit.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,9 +18,17 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postId;
-    private String username;
-    private String password;
-    private String email;
-    private Instant created;
-    private boolean enabled;
+    private String postName;
+    private String url;
+
+    @Lob
+    private String description;
+    private Integer voteCount = 0;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="userId", referencedColumnName = "userId")
+    private User user;
+
+    private Instant createdDate;
+
 }
